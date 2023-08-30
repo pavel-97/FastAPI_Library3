@@ -1,0 +1,86 @@
+version: '3.7'
+
+services:
+  author_app:
+    build: ./author
+    depends_on:
+      - user_app
+      - db
+      - db_book
+      - db_test
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - 8000:8000
+    volumes:
+       - ./author/:/app/
+    env_file:
+      - .env
+    container_name: author_app
+
+  book_app:
+    build: ./book
+    depends_on:
+      - user_app
+      - author_app
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8002 --reload
+    ports:
+      - 8002:8002
+    volumes:
+      - ./book/:/app/
+    env_file:
+      - .env
+    container_name: book_app
+
+  user_app:
+    build: ./user
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8001 --reload
+    ports:
+      - 8001:8001
+    volumes:
+       - ./user/:/app/
+    container_name: user_app
+
+  db:
+    image: postgres:15
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    container_name: db
+
+  db_book:
+    image: postgres:15
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+    restart: always
+    ports:
+      - '5430:5432'
+    volumes:
+      - ./data_book:/var/lib/postgresql/data
+    container_name: db_book
+
+  db_test:
+    image: postgres:15
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: $POSTGRES_USER_TEST
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD_TEST
+      POSTGRES_DB: $POSTGRES_DB_TEST
+    restart: always
+    ports:
+      - '5431:5432'
+    volumes:
+      - ./data_test:/var/lib/postgresql/data
+    container_name: db_test
