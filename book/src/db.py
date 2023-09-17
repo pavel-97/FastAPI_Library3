@@ -8,7 +8,7 @@ from .conf import env
 
 POSTGRES_USER: Final = env.str('POSTGRES_USER')
 POSTGRES_PASSWORD: Final = env.str('POSTGRES_PASSWORD')
-POSTGRES_DB: Final = env.str('POSTGRES_DB')
+POSTGRES_DB: Final = env.str('POSTGRES_DB_BOOK')
 
 
 DB_URL: Final = f'postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db_book/{POSTGRES_DB}'

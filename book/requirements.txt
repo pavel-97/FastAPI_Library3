@@ -12,9 +12,7 @@ celery==5.3.1
 fastapi-pagination==0.12.6
 fastapi-class==3.3.0
 fastapi-cache2[redis]
-fastapi-users[sqlalchemy]
 flower
-pytest
 pytest-asyncio
 jinja2
 websockets

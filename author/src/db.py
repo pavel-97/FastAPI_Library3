@@ -8,10 +8,10 @@ from src.conf import env
 
 POSTGRES_USER: Final = env.str('POSTGRES_USER')
 POSTGRES_PASSWORD: Final = env.str('POSTGRES_PASSWORD')
-POSTGRES_DB: Final = env.str('POSTGRES_DB')
+POSTGRES_DB: Final = env.str('POSTGRES_DB_AUTHOR')
 
 
-DB_URL: Final = f'postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db/{POSTGRES_DB}'
+DB_URL: Final = f'postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db_author/{POSTGRES_DB}'
 
 async_angine = create_async_engine(DB_URL)
 

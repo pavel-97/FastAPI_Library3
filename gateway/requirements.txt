@@ -10,10 +10,9 @@ pytest==7.3.1
 alembic==1.11.1
 celery==5.3.1
 fastapi-pagination==0.12.6
-fastapi-class==3.3.0
 fastapi-cache2[redis]
+fastapi-users[sqlalchemy]
 flower
 pytest-asyncio
-jinja2
-websockets
 aiohttp
+fastapi-gateway

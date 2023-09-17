@@ -16,6 +16,5 @@ fastapi-users[sqlalchemy]
 flower
 pytest
 pytest-asyncio
-jinja2
-websockets
 aiohttp
+fastapi-jwt
