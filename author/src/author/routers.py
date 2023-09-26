@@ -6,12 +6,15 @@ from src.utils.unitofworks import UnitOfWork
 
 from .schemas import CreateAuthor, UpdateAuthor
 
+from src.tasks import send_mail
+
 
 router = APIRouter()
 
 
 @router.get('/')
 async def authors(uow=Depends(UnitOfWork)):
+    r = send_mail.delay()
     authors_list = await AuthorService().all(uow)
     return authors_list
 

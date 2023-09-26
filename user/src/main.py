@@ -8,6 +8,7 @@ from src.user.dependencies import UserManagerDep, JwtAuthCredentials, UOWDep
 from src.user.managers import get_user_manager
 from src.user.managers import auth_backend
 from src.user.schemas import UserRead, UserCreate, Login
+from src.tasks import send_mail
 
 
 fastapi_users = FastAPIUsers(get_user_manager, [auth_backend])
@@ -31,6 +32,7 @@ async def login(response: Response, user_login: Login, uow: UOWDep, user_manager
     subject = {'username': user.email, 'id': user.id}
     access_token, refresh_token = create_set_access_refresh_tokens(response, subject)
     await UserService().create(uow, subject, refresh_token)
+    send_mail.delay(user.email)
     return {'refresh_token': refresh_token, 'access_token': access_token}
 
 
